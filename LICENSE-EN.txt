@@ -1,0 +1,79 @@
+COREHUB™ ULTRA-PROPRIETARY ENTERPRISE LICENSE  
+Version: 1.0 — 2025  
+Owner / Author: Davi Lorini Junior  
+Contact: davilorinijunior@gmail.com
+
+Preamble
+--------
+This agreement governs the terms and conditions under which the software
+named "CoreHub™" — including, without limitation, all source code, binaries,
+modules, APIs, scripts, documentation, AI models, assets, workflows,
+infrastructure, designs, trademarks, and related components (the "Software")
+— is licensed to the Licensee (the "User").
+
+This is a proprietary enterprise license and NOT an open-source license.
+By accessing, executing, viewing, cloning, or using the Software, the User
+accepts and agrees to be bound by these terms.
+
+1. Ownership
+------------
+1.1. The Software is the exclusive property of the Owner, Davi Lorini Junior.
+1.2. All intellectual property rights, copyrights, trademarks, patents and
+      know-how related to the Software are and shall remain the property of the Owner.
+
+2. Limited License Grant
+------------------------
+2.1. Subject to the restrictions contained herein, the Owner grants the User
+      a limited, revocable, non-exclusive license to:
+      a) run the Software locally for evaluation, testing and personal non-commercial use;
+      b) view the source code for reference only (no redistribution).
+2.2. No rights to modify, redistribute, sublicense, commercially exploit or
+      incorporate the Software into third-party products are conferred.
+
+3. Prohibitions
+---------------
+User is expressly prohibited, without prior written authorization, from:
+a) copying, cloning, redistributing, publishing, hosting or commercially exploiting the Software;
+b) creating derivative works, modifying, translating, decompiling or reversing the Software;
+c) integrating the Software into commercial services, SaaS or products;
+d) making the Software publicly available in any repository, marketplace or hosting service;
+e) removing or altering copyright, trademark or legal notices;
+f) using the Software to train public AI models without written permission;
+g) using the Software in competition with the Owner's services or products.
+
+4. Commercial Licensing
+-----------------------
+4.1. Any commercial use, production deployment, distribution, sublicensing,
+      or monetization requires a separate written commercial agreement.
+4.2. Terms (fees, royalties, support levels, SLAs, exclusivity, territory, term)
+      will be negotiated and defined in a separate contract.
+
+5. Trademark and Brand
+----------------------
+"CoreHub" and related logos are trademarks of the Owner. Any use requires explicit permission.
+
+6. Confidentiality
+------------------
+Materials, keys, credentials, documentation or code disclosed under contract are confidential.
+
+7. Warranty and Liability
+-------------------------
+Provided "AS IS". Owner disclaims all warranties. Owner is not liable for
+direct or consequential damages.
+
+8. Enforcement and Jurisdiction
+-------------------------------
+Owner may take technical and legal action globally. Applicable laws include
+copyright treaties (Berne, WIPO, TRIPS) and relevant national laws.
+
+9. Governing Law and Venue
+--------------------------
+Brazilian law applies by default; venue is the Owner's domicile court unless otherwise agreed.
+
+10. Termination
+---------------
+Violation terminates the license automatically and may trigger legal remedies.
+
+Contact
+-------
+For commercial licensing and support: davilorinijunior@gmail.com
