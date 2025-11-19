@@ -1,0 +1,89 @@
+COREHUB™ ULTRA-PROPRIETARY ENTERPRISE LICENSE  
+Versão: 1.0 — 2025  
+Titular / Autor: Davi Lorini Junior  
+Contato: davilorinijunior@gmail.com
+
+PREÂMBULO
+---------
+O presente instrumento legal estabelece os termos e condições pelos quais o software denominado "CoreHub™" — incluindo, sem limitação, todo código-fonte, binários, módulos, APIs, scripts, documentação, modelos de IA, ativos, fluxos, infraestrutura, design, marcas, e demais componentes relacionados (doravante "Software") — é disponibilizado ao Usuário.
+
+Este é um contrato de licença proprietária empresarial e NÃO uma licença open-source. Ao acessar, executar, visualizar, clonar ou utilizar o Software de qualquer forma, o Usuário concorda em ficar vinculado a estes termos.
+
+1. PROPRIEDADE
+--------------
+1.1. O Software é propriedade exclusiva e inalienável de Davi Lorini Junior (doravante "Proprietário").  
+1.2. Todos os direitos de propriedade intelectual, autorais, de marca, patente, know-how e quaisquer outros direitos relacionados ao Software são e permanecerão pertencentes ao Proprietário, globalmente e por toda a duração legal.
+
+2. CONCESSÃO RESTRITA DE USO
+----------------------------
+2.1. Sujeito às restrições deste instrumento, o Proprietário concede ao Usuário uma licença limitada, revogável e não exclusiva para:  
+  a) executar o Software localmente para fins de avaliação, testes e uso pessoal não comercial;  
+  b) visualizar o código-fonte exclusivamente para fins de compreensão local (sem redistribuição).  
+2.2. Esta licença NÃO confere ao Usuário direitos de modificação para fins de redistribuição, sublicenciamento, comercialização, publicação, ou incorporação em produtos de terceiros.
+
+3. RESTRIÇÕES E PROIBIÇÕES
+--------------------------
+Sem autorização escrita prévia do Proprietário, o Usuário está expressamente proibido de:
+
+a) copiar, reproduzir, distribuir, publicar, hospedar, disponibilizar, sincronizar, sublicenciar ou comercializar o Software, no todo ou em parte;  
+b) criar obras derivadas, adaptar, traduzir, compilar, descompilar, fazer engenharia reversa, desmontar ou attemptar extrair o código-fonte, algoritmos, dados ou estrutura do Software;  
+c) integrar, embutir, incorporar ou utilizar o Software como base para produtos, plataformas ou serviços comerciais;  
+d) disponibilizar o Software em repositórios públicos, mirrors, marketplaces, serviços de hospedagem, ou similares;  
+e) remover, alterar ou ocultar avisos de direitos autorais, marcas ou quaisquer avisos legais inclusos;  
+f) usar o Software para treinar modelos públicos de IA sem autorização expressa e assinada;  
+g) utilizar o Software em atividades que concorram com produtos ou serviços oferecidos pelo Proprietário.
+
+4. LICENCIAMENTO COMERCIAL
+--------------------------
+4.1. Qualquer uso comercial, operacional em produção, integração em serviços SaaS, distribuição, sublicenciamento ou monetização do Software exige acordo prévio e escrito entre o Usuário (ou parte interessada) e o Proprietário.  
+4.2. Os termos comerciais (valor, royalties, suporte, SLA, grau de exclusividade, territorialidade e prazo) serão definidos em contrato separado.  
+4.3. A celebração do contrato comercial é condição para emissão de qualquer licença ampliada, chaves, credenciais ou código fonte adicional.
+
+5. MARCA E IDENTIDADE
+---------------------
+5.1. "CoreHub", logotipos e demais sinais distintivos relacionados ao Software são marcas de propriedade do Proprietário.  
+5.2. É proibido usar, reproduzir, criar variações ou associar-se a estas marcas sem autorização por escrito.
+
+6. CONFIDENCIALIDADE E DADOS
+----------------------------
+6.1. Caso o Proprietário compartilhe materiais, chaves, credenciais, documentação técnica não pública ou códigos adicionais sob acordo, estes serão considerados confidenciais.  
+6.2. O Usuário obriga-se a não divulgar, replicar ou utilizar informação confidencial para qualquer fim não autorizado.
+
+7. GARANTIA E RESPONSABILIDADES
+-------------------------------
+7.1. O Software é fornecido “NO ESTADO EM QUE SE ENCONTRA” (AS IS). O Proprietário não oferece garantias expressas ou implícitas, incluindo, mas não limitado a, garantias de comercialização, adequação a um fim específico, disponibilidade, segurança, ou não infração.  
+7.2. Em nenhuma hipótese o Proprietário será responsável por danos diretos, indiretos, especiais, incidentais, consequenciais, perda de lucro, perda de dados, custos de substituição ou qualquer outra responsabilidade decorrente do uso ou impossibilidade de uso do Software, mesmo que avisado da possibilidade de tais danos.
+
+8. CUMPRIMENTO LEGAL E APLICAÇÃO GLOBAL
+--------------------------------------
+8.1. Esta licença aplica-se globalmente e o Proprietário poderá executar medidas legais, administrativas ou técnicas para proteger seus direitos em qualquer jurisdição.  
+8.2. O Usuário concorda que violações podem resultar em bloqueio, remoção de acesso, pedidos de retirada (DMCA), medidas injuntivas e ações civis ou criminais conforme legislação aplicável.
+
+9. LEI APLICÁVEL E FORO
+-----------------------
+9.1. Na ausência de acordo específico em contrário, as partes elegem as leis do Brasil para dirimir questões contratuais e de propriedade intelectual.  
+9.2. O foro eleito para controvérsias será o da comarca de residência do Proprietário, salvo disposição em contrário no contrato comercial específico.
+
+10. VIGÊNCIA E RESCISÃO
+-----------------------
+10.1. Esta licença entra em vigor na data de aceitação (primeiro uso ou acesso) e permanece válida enquanto o Usuário cumprir suas obrigações.  
+10.2. O Proprietário poderá rescindir unilateralmente a licença no caso de violação, sem aviso prévio. A rescisão não afeta direitos de reparação por danos.
+
+11. AUDITORIA E MEDIDAS TÉCNICAS
+--------------------------------
+11.1. O Proprietário reserva-se o direito de tomar medidas técnicas para proteger o Software (telemetria, chaves, mecanismo de ativação em versões comerciais), desde que observadas leis aplicáveis.  
+11.2. O Proprietário mantém o direito de auditar o uso do Software quando autorizado por contrato comercial.
+
+12. DISPOSIÇÕES GERAIS
+---------------------
+12.1. Se qualquer disposição desta licença for considerada inválida, ilegal ou inaplicável, as demais disposições permanecerão em pleno vigor.  
+12.2. Nenhum ato de tolerância pelo Proprietário será considerado renúncia de direitos, salvo manifestação expressa por escrito.
+
+CONTATO PARA LICENCIAMENTO
+--------------------------
+Para propostas comerciais, suporte empresarial ou solicitações de licença, contate:
+Email: amaris.blecinc@gmail.com
+
+DECLARAÇÃO FINAL
+----------------
+Esta é a licença oficial do CoreHub™ (Versão 1.0 — 2025). Todos os direitos são reservados ao Proprietário, sem limitações salvo as previstas expressamente neste documento.
