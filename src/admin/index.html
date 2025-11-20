@@ -1,0 +1,65 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LegadoCore — Admin</title>
+<style>body{font-family:Arial,Helvetica,sans-serif;background:#f7f9fb;padding:20px}header{margin-bottom:12px}section{background:#fff;padding:12px;border-radius:8px;box-shadow:0 1px 4px rgba(0,0,0,.06);margin-bottom:10px}table{width:100%;border-collapse:collapse}td,th{padding:8px;border-bottom:1px solid #eee}</style>
+</head>
+<body>
+<header><h1>LegadoCore — Admin</h1><p>Dashboard simples — use a API para operações avançadas.</p></header>
+<section>
+<h3>Módulos</h3>
+<button onclick="loadModules()">Carregar módulos</button>
+<ul id="mods"></ul>
+</section>
+<section>
+<h3>Registrar venda</h3>
+<form id="saleForm" onsubmit="return registerSale();">
+<input id="client" placeholder="Cliente" required /> <input id="amount" placeholder="Valor" required type="number" step="0.01" />
+<input id="note" placeholder="Nota" />
+<button type="submit">Registrar</button>
+</form>
+<ul id="sales"></ul>
+</section>
+<script>
+const API = '/api';
+async function loadModules(){
+  const r = await fetch(API + '/modules');
+  const j = await r.json();
+  const ul = document.getElementById('mods');
+  ul.innerHTML = '';
+  j.forEach(m => {
+    const li = document.createElement('li');
+    li.innerHTML = '<b>' + m.name + '</b> — criado: ' + m.created_at + ' <button onclick="runModule(\''+m.name+'\')">Executar</button>';
+    ul.appendChild(li);
+  });
+}
+async function runModule(name){
+  const r = await fetch(API + '/modules/' + name + '/run');
+  const j = await r.json();
+  alert(JSON.stringify(j));
+}
+async function registerSale(){
+  const client = document.getElementById('client').value;
+  const amount = document.getElementById('amount').value;
+  const note = document.getElementById('note').value;
+  const r = await fetch(API + '/sales', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({client, amount, note})});
+  const j = await r.json();
+  alert('Venda registrada: ' + JSON.stringify(j));
+  loadSales();
+  return false;
+}
+async function loadSales(){
+  const r = await fetch(API + '/sales');
+  const j = await r.json();
+  const ul = document.getElementById('sales');
+  ul.innerHTML = '';
+  j.forEach(s => {
+    const li = document.createElement('li');
+    li.textContent = s.created_at + ' — ' + s.client + ' — R$ ' + s.amount + ' — ' + s.note;
+    ul.appendChild(li);
+  });
+}
+loadSales();
+</script>
+</body>
+</html>
