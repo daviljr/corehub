@@ -1,0 +1,7 @@
+service: legadocore-corehub
+type: web
+env: node
+buildCommand: npm install
+startCommand: npm start
+plan: free
+branch: main
