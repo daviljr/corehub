@@ -1,8 +1,12 @@
-export default function Page() {
-  const tasks = [
-    { id: 1, title: "Fotos UltraMax (lifestyle)", status: "em progresso" },
+import Link from "next/link";
+
+type Task = { id: number; title: string; status: string };
+
+export default function TarefasPage() {
+  const tasks: Task[] = [
+    { id: 1, title: "Fotos Ultramax (lifestyle)", status: "em-progresso" },
     { id: 2, title: "Upload imagens Supabase", status: "pendente" },
-    { id: 3, title: "Criar SQL produtos oficiais", status: "concluído" },
+    { id: 3, title: "Criar SQL produtos oficiais", status: "concluido" },
   ];
 
   return (
@@ -15,19 +19,23 @@ export default function Page() {
 
         <section className="bg-white p-4 rounded-lg shadow">
           <ul className="space-y-3">
-            {tasks.map(t => (
-              <li key={t.id} className="p-3 border rounded flex justify-between items-center">
+            {tasks.map((t) => (
+              <li key={t.id} className="flex justify-between items-center p-3 border rounded">
                 <div>
                   <div className="font-semibold">{t.title}</div>
-                  <div className="text-xs text-slate-500">ID {t.id}</div>
+                  <div className="text-sm text-slate-500">ID: {t.id}</div>
                 </div>
-                <div className="text-sm">
-                  <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700">{t.status}</span>
+                <div className="text-right">
+                  <span className="inline-block px-3 py-1 rounded-full bg-slate-100 text-sm">{t.status}</span>
                 </div>
               </li>
             ))}
           </ul>
         </section>
+
+        <div className="mt-6">
+          <Link href="/organize" className="text-teal-600 hover:underline">← Voltar ao painel</Link>
+        </div>
       </div>
     </main>
   );
