@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "id": "p1",
+      "title": "Rel\u00f3gio Masculino Luxo Original 2025",
+      "price": "199.90",
+      "image_url": "/placeholder.png",
+      "description": "Rel\u00f3gio elegante."
+    },
+    {
+      "id": "p2",
+      "title": "Smartwatch Pro X9",
+      "price": "149.90",
+      "image_url": "/placeholder.png",
+      "description": "Smartwatch moderno."
+    }
+  ]
+}
