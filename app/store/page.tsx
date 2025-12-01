@@ -4,7 +4,7 @@ export default async function StorePage() {
   const products = await getProducts();
   return (
     <div>
-      <h1 className="text-3xl font-bold">Loja Shadebox</h1>
+      <h1 className="text-3xl font-bold">Loja Sheidbox</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
         {products.map((p:any) => (
           <div key={p.id} className="border rounded p-4 shadow-sm">
