@@ -21,7 +21,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <a href="/blog">Blog</a>
               <a href="/cart">Carrinho</a>
               <a href="/account">Conta</a>
-              <a href="/organize" className="hover:underline">Organização</a>
     </nav>
           </div>
         </header>
