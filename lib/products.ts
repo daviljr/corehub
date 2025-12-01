@@ -12,6 +12,7 @@ export type Product = {
   image_url?: string | null;
   stock?: number | null;
   price?: number | null;
+  description?: string | null;
   created_at?: string | null;
 };
 
@@ -19,7 +20,7 @@ async function fetchProductsFromSupabase(): Promise<Product[]> {
   try {
     const { data, error } = await supabase
       .from('products')
-      .select('id, name, title, slug, image_url, stock, price, created_at')
+      .select('id, name, title, slug, image_url, stock, price, description, created_at')
       .order('created_at', { ascending: false })
       .limit(300);
 
@@ -59,7 +60,11 @@ export async function getProductById(id: string): Promise<Product | null> {
   if (!id) return null;
   try {
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      const { data, error } = await supabase.from('products').select('id, name, title, slug, image_url, stock, price, created_at').eq('id', id).single();
+      const { data, error } = await supabase
+        .from('products')
+        .select('id, name, title, slug, image_url, stock, price, description, created_at')
+        .eq('id', id)
+        .single();
       if (error) {
         console.error('Supabase error (getProductById):', error);
       } else if (data) {
@@ -79,7 +84,11 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
   if (!slug) return null;
   try {
     if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      const { data, error } = await supabase.from('products').select('id, name, title, slug, image_url, stock, price, created_at').eq('slug', slug).single();
+      const { data, error } = await supabase
+        .from('products')
+        .select('id, name, title, slug, image_url, stock, price, description, created_at')
+        .eq('slug', slug)
+        .single();
       if (error) {
         console.error('Supabase error (getProductBySlug):', error);
       } else if (data) {
