@@ -1,58 +1,32 @@
-import Link from "next/link";
-
-export default function AdminIndex() {
-  const cards = [
-    { href: "/admin/organize", title: "Organização", desc: "Prompts, produtos, pipeline e SEO" },
-    { href: "/admin/products", title: "Cadastro de Produtos", desc: "Adicionar e editar produtos da loja" },
-    { href: "/admin/prompts", title: "Biblioteca de Prompts", desc: "Armazene prompts de imagens, vídeos e anúncios" },
-    { href: "/admin/tarefas", title: "Tarefas & Pipeline", desc: "Gerenciar etapas e progresso de produção" },
-    { href: "/admin/seo", title: "SEO & Sitemap", desc: "Gerar títulos, meta tags e sitemap.xml" },
+export default function AdminDashboard() {
+  const items = [
+    { title: "Organização", href: "/admin/organize", color: "from-purple-500 to-pink-500" },
+    { title: "Produtos", href: "/admin/products", color: "from-blue-500 to-cyan-500" },
+    { title: "Blog", href: "/admin/blog", color: "from-emerald-500 to-teal-500" },
+    { title: "SEO & Marketing", href: "/admin/seo", color: "from-yellow-500 to-orange-500" },
+    { title: "Tarefas", href: "/admin/tarefas", color: "from-rose-500 to-red-500" },
   ];
 
   return (
-    <main className="min-h-screen p-6 bg-slate-50">
-      <div className="max-w-5xl mx-auto">
-        <header className="mb-6 flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Painel Admin</h1>
-            <p className="text-sm text-slate-600">
-              Acesso restrito — escolha um módulo para gerenciar.
-            </p>
-          </div>
+    <div className="min-h-screen bg-slate-950 text-white py-16 px-6">
+      <h1 className="text-4xl font-extrabold mb-10 text-center">
+        Painel Administrativo — Sheidbox
+      </h1>
 
-          <div className="flex items-center gap-3">
-            <Link href="/" className="text-sm text-slate-600 hover:underline">
-              Ver site
-            </Link>
-            <Link
-              href="/api/admin/logout"
-              className="text-sm bg-red-50 px-3 py-1 rounded text-red-600 hover:bg-red-100"
-            >
-              Sair
-            </Link>
-          </div>
-        </header>
-
-        <section className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {cards.map((c) => (
-            <Link key={c.href} href={c.href} className="block bg-white p-5 rounded shadow hover:shadow-lg transition">
-              <h2 className="text-lg font-semibold mb-1">{c.title}</h2>
-              <p className="text-sm text-slate-600">{c.desc}</p>
-            </Link>
-          ))}
-        </section>
-
-        <aside className="mt-8">
-          <div className="bg-white p-4 rounded shadow">
-            <h3 className="font-semibold">Status rápido</h3>
-            <ul className="text-sm text-slate-600 mt-2">
-              <li>Ping API: —</li>
-              <li>Supabase (leitura): —</li>
-              <li>Último deploy: —</li>
-            </ul>
-          </div>
-        </aside>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        {items.map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="p-6 rounded-2xl bg-gradient-to-br shadow-xl hover:scale-[1.02] transition-transform cursor-pointer
+                       text-white font-bold text-xl text-center"
+          >
+            <div className={`bg-gradient-to-br ${item.color} p-6 rounded-xl`}>
+              {item.title}
+            </div>
+          </a>
+        ))}
       </div>
-    </main>
+    </div>
   );
 }
