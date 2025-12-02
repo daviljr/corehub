@@ -20,9 +20,9 @@ export async function GET(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("products")
-    .select("id, name, slug, price, image_url, stock, created_at")
+    .select("id, name, slug, price, image_url, image_thumb_url, stock, created_at")
     .order("created_at", { ascending: false })
-    .limit(200);
+    .limit(500);
 
   if (error) {
     return new NextResponse(JSON.stringify({ error: error.message }), { status: 500 });
@@ -35,7 +35,23 @@ export async function POST(req: NextRequest) {
   if (!cookie || cookie !== ADMIN_SECRET) return unauthorized();
 
   const body = await req.json().catch(() => ({}));
-  const { name, slug, price = 0, image_url = null, stock = 0 } = body;
+
+  // caso seja atualização de imagem
+  if (body.update_image_for_id && (body.image_url || body.image_thumb_url)) {
+    const { update_image_for_id, image_url = null, image_thumb_url = null } = body;
+    const { data, error } = await supabase
+      .from("products")
+      .update({ image_url, image_thumb_url })
+      .eq("id", update_image_for_id)
+      .select()
+      .single();
+
+    if (error) return new NextResponse(JSON.stringify({ error: error.message }), { status: 500 });
+    return NextResponse.json({ data });
+  }
+
+  // criação de produto padrão
+  const { name, slug, price = 0, image_url = null, image_thumb_url = null, stock = 0 } = body;
 
   if (!name || !slug) {
     return new NextResponse(JSON.stringify({ error: "Missing name or slug" }), { status: 400 });
@@ -43,7 +59,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("products")
-    .insert([{ name, slug, price, image_url, stock }])
+    .insert([{ name, slug, price, image_url, image_thumb_url, stock }])
     .select()
     .single();
 
