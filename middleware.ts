@@ -9,18 +9,24 @@ export const config = {
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // allow Next internals, API auth routes (they handle their own), static files
-  if (pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.includes(".") ) {
+  // permitir recursos internos, APIs e arquivos estáticos
+  if (pathname.startsWith("/_next") || pathname.startsWith("/api") || pathname.includes(".")) {
     return NextResponse.next();
   }
 
-  // Protect /admin (inclui /admin/organize etc.)
-  const cookie = req.cookies.get("corehub_admin")?.value;
-  const adminSecret = process.env.ADMIN_SECRET;
+  // permitir explicitamente a página de login pública
+  if (pathname === "/admin/login" || pathname.startsWith("/admin/login?")) {
+    return NextResponse.next();
+  }
 
+  // proteger demais rotas /admin/*
   if (pathname.startsWith("/admin")) {
+    // cookie esperado (mantive o nome atual usado no seu projeto)
+    const cookie = req.cookies.get("corehub_admin")?.value;
+    const adminSecret = process.env.ADMIN_SECRET;
+
+    // se não houver cookie válido, redireciona para login preservando origem
     if (!cookie || !adminSecret || cookie !== adminSecret) {
-      // redirect to login, preserving "from" so we can return after login
       const url = req.nextUrl.clone();
       url.pathname = "/admin/login";
       url.search = `from=${encodeURIComponent(pathname)}`;
