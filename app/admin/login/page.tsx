@@ -42,7 +42,8 @@ export default function AdminLoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <label className="block">
             <input
-              type="password" name="password"
+            name="password"
+              type="password"
               placeholder="Senha administrativa"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
