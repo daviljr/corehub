@@ -1,168 +1,153 @@
 "use client";
-
 import { useEffect, useState } from "react";
 
-type Provider = {
-  id?: string;
+type StorageRef = {
+  id: string;
   name: string;
-  slug?: string;
   type: string;
   base_url?: string;
+  public_key?: string;
+  private_key?: string;
   priority?: number;
-  is_active?: boolean;
-  config?: any;
-  meta?: any;
+  created_at?: string;
 };
 
-export default function AdminStorageConfigPage() {
-  const [providers, setProviders] = useState<Provider[]>([]);
+export default function AdminStoragePage() {
+  const [list, setList] = useState<StorageRef[]>([]);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState<any>({
+  const [saving, setSaving] = useState(false);
+  const [form, setForm] = useState({
     name: "",
-    slug: "",
     type: "supabase",
     base_url: "",
-    priority: 100,
-    is_active: true,
-    config: { mirror_to: [], regional_priority: {}, overflow_threshold: 85 }
+    public_key: "",
+    private_key: "",
+    priority: "0",
   });
-  const [submitting, setSubmitting] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
 
-  async function loadProviders() {
+  async function fetchList() {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/storage");
-      if (res.ok) {
-        const j = await res.json();
-        setProviders(j.data || []);
-      } else {
-        console.error("Erro carregando providers", await res.text());
-      }
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
+      const res = await fetch("/api/storage/list");
+      const j = await res.json();
+      if (res.ok && j.data) setList(j.data);
+      else setErr(j.error || "Erro ao listar storages");
+    } catch (e:any) {
+      setErr(e.message || "Erro de rede");
+    } finally { setLoading(false); }
   }
 
-  useEffect(()=>{ loadProviders(); }, []);
+  useEffect(()=>{ fetchList(); },[]);
 
-  function updateField(k:string, v:any) {
-    setForm((s:any)=>({...s, [k]: v}));
-  }
-
-  function updateConfig(path:string, v:any) {
-    setForm((s:any)=> {
-      const cfg = {...(s.config||{})};
-      cfg[path] = v;
-      return {...s, config: cfg};
-    });
-  }
-
-  async function handleSubmit(e:any) {
-    e?.preventDefault?.();
-    setSubmitting(true);
+  async function handleAdd(e: React.FormEvent) {
+    e.preventDefault();
+    setErr(null);
+    setSaving(true);
     try {
-      const body = {
+      const payload = {
         name: form.name,
-        slug: form.slug || undefined,
         type: form.type,
-        base_url: form.base_url || undefined,
-        priority: Number(form.priority) || 100,
-        is_active: !!form.is_active,
-        config: form.config || {}
+        base_url: form.base_url || null,
+        public_key: form.public_key || null,
+        private_key: form.private_key || null,
+        priority: parseInt(form.priority || "0", 10),
       };
       const res = await fetch("/api/storage/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(body),
+        body: JSON.stringify(payload),
+        credentials: "include"
       });
-      if (res.ok) {
-        await loadProviders();
-        setForm({
-          name: "",
-          slug: "",
-          type: "supabase",
-          base_url: "",
-          priority: 100,
-          is_active: true,
-          config: { mirror_to: [], regional_priority: {}, overflow_threshold: 85 }
-        });
-      } else {
+      if (!res.ok) {
         const j = await res.json().catch(()=>({}));
-        alert("Erro: " + (j.error || "unknown"));
+        setErr(j.error || "Erro ao salvar");
+      } else {
+        setForm({ name:"", type:"supabase", base_url:"", public_key:"", private_key:"", priority:"0" });
+        await fetchList();
       }
-    } catch (err) {
-      console.error(err);
-      alert("Erro de rede");
-    } finally {
-      setSubmitting(false);
-    }
+    } catch (e:any) {
+      setErr(e.message || "Erro de rede");
+    } finally { setSaving(false); }
   }
 
   return (
     <main className="min-h-screen p-6 bg-slate-50">
-      <div className="max-w-5xl mx-auto">
-        <header className="flex items-center justify-between mb-6">
-          <h1 className="text-2xl font-bold">Storage Service — Configuração</h1>
-          <div className="text-sm text-slate-500">Adicione, monitore e ajuste provedores de arquivo.</div>
-        </header>
+      <div className="max-w-3xl mx-auto">
+        <h1 className="text-2xl font-bold mb-4">Storage Services</h1>
 
-        <section className="bg-white p-4 rounded shadow mb-6">
-          <h2 className="font-semibold mb-3">Adicionar novo provedor</h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-3">
-            <div className="grid md:grid-cols-2 gap-3">
-              <input value={form.name} onChange={(e)=>updateField("name", e.target.value)} placeholder="Nome do provedor (ex: FileStorageSupabase)" className="p-2 border rounded" required />
-              <input value={form.slug} onChange={(e)=>updateField("slug", e.target.value)} placeholder="slug (opcional)" className="p-2 border rounded" />
+        <section className="mb-6 bg-white p-4 rounded shadow">
+          <h2 className="font-semibold mb-2">Adicionar Storage</h2>
+          <form onSubmit={handleAdd} className="space-y-3">
+            <div>
+              <label className="block text-sm">Nome</label>
+              <input value={form.name} onChange={(e)=>setForm({...form, name:e.target.value})}
+                className="w-full border px-3 py-2 rounded" required />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-3">
-              <select value={form.type} onChange={(e)=>updateField("type", e.target.value)} className="p-2 border rounded">
-                <option value="supabase">supabase</option>
-                <option value="cloudinary">cloudinary</option>
-                <option value="s3">s3</option>
-                <option value="custom">custom</option>
+            <div>
+              <label className="block text-sm">Tipo</label>
+              <select value={form.type} onChange={(e)=>setForm({...form, type:e.target.value})}
+                className="w-full border px-3 py-2 rounded">
+                <option value="supabase">Supabase</option>
+                <option value="cloudinary">Cloudinary</option>
+                <option value="s3">S3-Compatible</option>
+                <option value="other">Other (custom)</option>
               </select>
-              <input value={form.base_url} onChange={(e)=>updateField("base_url", e.target.value)} placeholder="Base URL (opcional)" className="p-2 border rounded" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-3">
-              <input type="number" value={form.priority} onChange={(e)=>updateField("priority", e.target.value)} className="p-2 border rounded" placeholder="priority (menor = preferido)" />
-              <label className="flex items-center gap-2">
-                <input type="checkbox" checked={!!form.is_active} onChange={(e)=>updateField("is_active", e.target.checked)} />
-                <span className="text-sm">Ativo</span>
-              </label>
+            <div>
+              <label className="block text-sm">Base URL</label>
+              <input value={form.base_url} onChange={(e)=>setForm({...form, base_url:e.target.value})}
+                className="w-full border px-3 py-2 rounded" placeholder="https://..." />
             </div>
 
-            <div className="grid md:grid-cols-3 gap-3">
-              <input value={form.config?.overflow_threshold || 85} onChange={(e)=>updateConfig("overflow_threshold", Number(e.target.value))} type="number" placeholder="Overflow threshold (%)" className="p-2 border rounded" />
-              <input value={JSON.stringify(form.config?.mirror_to || [])} onChange={(e)=>updateConfig("mirror_to", JSON.parse(e.target.value || "[]"))} placeholder='mirror_to (JSON array) ex: ["id1","id2"]' className="p-2 border rounded" />
-              <input value={JSON.stringify(form.config?.regional_priority || {})} onChange={(e)=>updateConfig("regional_priority", JSON.parse(e.target.value || "{}"))} placeholder='regional_priority (JSON) ex: {"BR":20}' className="p-2 border rounded" />
+            <div className="grid grid-cols-2 gap-2">
+              <div>
+                <label className="block text-sm">Public Key</label>
+                <input value={form.public_key} onChange={(e)=>setForm({...form, public_key:e.target.value})}
+                  className="w-full border px-3 py-2 rounded" />
+              </div>
+              <div>
+                <label className="block text-sm">Private Key</label>
+                <input value={form.private_key} onChange={(e)=>setForm({...form, private_key:e.target.value})}
+                  className="w-full border px-3 py-2 rounded" />
+              </div>
             </div>
 
-            <div className="flex gap-3 items-center">
-              <button disabled={submitting} type="submit" className="bg-teal-600 text-white px-4 py-2 rounded">{submitting ? "Adicionando..." : "Adicionar provedor"}</button>
-              <button type="button" onClick={loadProviders} className="px-3 py-2 bg-slate-200 rounded">Atualizar lista</button>
+            <div>
+              <label className="block text-sm">Priority (0 = highest)</label>
+              <input value={form.priority} onChange={(e)=>setForm({...form, priority:e.target.value})}
+                className="w-full border px-3 py-2 rounded" type="number" />
+            </div>
+
+            {err && <div className="text-red-600">{err}</div>}
+
+            <div className="flex items-center gap-3">
+              <button type="submit" disabled={saving}
+                className="bg-teal-600 text-white px-4 py-2 rounded">
+                {saving ? "Salvando…" : "Adicionar Storage"}
+              </button>
+              <button type="button" onClick={fetchList} className="text-sm text-slate-600 underline">Atualizar lista</button>
             </div>
           </form>
         </section>
 
         <section className="bg-white p-4 rounded shadow">
-          <h2 className="font-semibold mb-3">Provedores configurados</h2>
-
-          {loading ? <div>Carregando...</div> : (
-            <div className="space-y-2">
-              {providers.map((p:any) => (
-                <div key={p.id} className="border p-3 rounded flex justify-between items-start">
+          <h2 className="font-semibold mb-2">Storages cadastrados</h2>
+          {loading ? <div>Carregando…</div> : (
+            <ul className="space-y-2">
+              {list.length===0 && <li className="text-sm text-slate-600">Nenhum storage cadastrado.</li>}
+              {list.map(s => (
+                <li key={s.id} className="p-3 border rounded flex justify-between items-center">
                   <div>
-                    <div className="font-medium">{p.name} <span className="text-xs text-slate-400">({p.type})</span></div>
-                    <div className="text-sm text-slate-500">{p.base_url || "—"}</div>
-                    <div className="text-xs text-slate-400 mt-1">priority: {p.priority} • active: {p.is_active ? "yes" : "no"}</div>
-                    <div className="text-xs text-slate-400 mt-1">config: <code className="text-xs">{JSON.stringify(p.config || {})}</code></div>
+                    <div className="font-semibold">{s.name} <span className="text-xs text-slate-500">({s.type})</span></div>
+                    <div className="text-xs text-slate-500">{s.base_url || "—"}</div>
                   </div>
-                </div>
+                  <div className="text-sm text-slate-500">prio: {s.priority ?? 0}</div>
+                </li>
               ))}
-            </div>
+            </ul>
           )}
         </section>
       </div>
