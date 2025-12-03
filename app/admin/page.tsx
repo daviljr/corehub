@@ -1,32 +1,39 @@
-export default function AdminDashboard() {
-  const items = [
-    { title: "Organização", href: "/admin/organize", color: "from-purple-500 to-pink-500" },
-    { title: "Produtos", href: "/admin/products", color: "from-blue-500 to-cyan-500" },
-    { title: "Blog", href: "/admin/blog", color: "from-emerald-500 to-teal-500" },
-    { title: "SEO & Marketing", href: "/admin/seo", color: "from-yellow-500 to-orange-500" },
-    { title: "Tarefas", href: "/admin/tarefas", color: "from-rose-500 to-red-500" },
+"use client";
+import Link from "next/link";
+import React from "react";
+
+export default function AdminPage() {
+  const ACTIONS = [
+    { href: "/admin/organize", label: "Organização", color: "from-pink-500 to-purple-500" },
+    { href: "/admin/products", label: "Produtos", color: "from-blue-400 to-cyan-400" },
+    { href: "/admin/blog", label: "Blog", color: "from-emerald-400 to-teal-400" },
+    { href: "/admin/seo", label: "SEO & Marketing", color: "from-orange-400 to-yellow-500" },
+    { href: "/admin/tasks", label: "Tarefas", color: "from-rose-400 to-red-400" },
+    // novo botão Storage adicionado aqui:
+    { href: "/admin/storage", label: "Storage Services", color: "from-emerald-600 to-teal-500" },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-950 text-white py-16 px-6">
-      <h1 className="text-4xl font-extrabold mb-10 text-center">
-        Painel Administrativo — Sheidbox
-      </h1>
+    <main className="min-h-screen bg-slate-900 text-white p-6">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-extrabold text-center mb-8">Painel Administrativo — Sheidbox</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto">
-        {items.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className="p-6 rounded-2xl bg-gradient-to-br shadow-xl hover:scale-[1.02] transition-transform cursor-pointer
-                       text-white font-bold text-xl text-center"
-          >
-            <div className={`bg-gradient-to-br ${item.color} p-6 rounded-xl`}>
-              {item.title}
-            </div>
-          </a>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {ACTIONS.map((a) => (
+            <Link key={a.href} href={a.href}>
+              <a
+                className={
+                  "block w-full text-center py-6 rounded-xl shadow-lg transform hover:-translate-y-1 transition " +
+                  "bg-gradient-to-r " + a.color
+                }
+                aria-label={a.label}
+              >
+                <span className="text-lg font-semibold">{a.label}</span>
+              </a>
+            </Link>
+          ))}
+        </div>
       </div>
-    </div>
+    </main>
   );
 }
