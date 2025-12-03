@@ -1,153 +1,233 @@
 "use client";
+
 import { useEffect, useState } from "react";
 
-type StorageRef = {
+type StorageType = "supabase" | "cloudinary" | "s3" | "custom";
+
+type StorageItem = {
   id: string;
   name: string;
-  type: string;
-  base_url?: string;
-  public_key?: string;
-  private_key?: string;
-  priority?: number;
-  created_at?: string;
+  type: StorageType;
+  base_url?: string | null;
+  public_key?: string | null;
+  private_key?: string | null;
+  priority?: number | null;
+  created_at?: string | null;
 };
 
 export default function AdminStoragePage() {
-  const [list, setList] = useState<StorageRef[]>([]);
+  const [list, setList] = useState<StorageItem[]>([]);
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
   const [form, setForm] = useState({
     name: "",
-    type: "supabase",
+    type: "supabase" as StorageType,
     base_url: "",
     public_key: "",
     private_key: "",
     priority: "0",
   });
-  const [err, setErr] = useState<string | null>(null);
 
   async function fetchList() {
     setLoading(true);
+    setErr(null);
     try {
       const res = await fetch("/api/storage/list");
       const j = await res.json();
-      if (res.ok && j.data) setList(j.data);
-      else setErr(j.error || "Erro ao listar storages");
-    } catch (e:any) {
-      setErr(e.message || "Erro de rede");
-    } finally { setLoading(false); }
+      if (!res.ok) throw new Error(j?.error || "Erro ao carregar storages");
+      setList(j.data || []);
+    } catch (e: any) {
+      setErr(e.message || "Erro desconhecido");
+    } finally {
+      setLoading(false);
+    }
   }
 
-  useEffect(()=>{ fetchList(); },[]);
+  useEffect(() => {
+    fetchList();
+  }, []);
 
-  async function handleAdd(e: React.FormEvent) {
-    e.preventDefault();
+  function updateField<K extends keyof typeof form>(k: K, v: string) {
+    setForm((x) => ({ ...x, [k]: v }));
+  }
+
+  function validate() {
+    if (!form.name.trim()) return "Preencha o nome";
+    if (form.type !== "custom" && !form.base_url.trim()) {
+      return "Preencha o Base URL";
+    }
+    return null;
+  }
+
+  async function handleAdd(e?: Event) {
+    if (e && (e as unknown as Event).preventDefault) (e as any).preventDefault();
     setErr(null);
+    setSuccess(null);
+    const v = validate();
+    if (v) {
+      setErr(v);
+      return;
+    }
     setSaving(true);
     try {
       const payload = {
-        name: form.name,
+        name: form.name.trim(),
         type: form.type,
         base_url: form.base_url || null,
         public_key: form.public_key || null,
         private_key: form.private_key || null,
-        priority: parseInt(form.priority || "0", 10),
+        priority: parseInt(form.priority || "0", 10) || 0,
       };
       const res = await fetch("/api/storage/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
-        credentials: "include"
+        credentials: "include",
       });
+      const j = await res.json().catch(() => ({}));
       if (!res.ok) {
-        const j = await res.json().catch(()=>({}));
-        setErr(j.error || "Erro ao salvar");
-      } else {
-        setForm({ name:"", type:"supabase", base_url:"", public_key:"", private_key:"", priority:"0" });
-        await fetchList();
+        throw new Error(j?.error || "Falha ao adicionar storage");
       }
-    } catch (e:any) {
-      setErr(e.message || "Erro de rede");
-    } finally { setSaving(false); }
+      setSuccess("Storage adicionado com sucesso.");
+      setForm({
+        name: "",
+        type: "supabase",
+        base_url: "",
+        public_key: "",
+        private_key: "",
+        priority: "0",
+      });
+      await fetchList();
+    } catch (e: any) {
+      setErr(e.message || "Erro desconhecido");
+    } finally {
+      setSaving(false);
+    }
   }
 
   return (
     <main className="min-h-screen p-6 bg-slate-50">
-      <div className="max-w-3xl mx-auto">
-        <h1 className="text-2xl font-bold mb-4">Storage Services</h1>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-extrabold mb-4">Storage Services</h1>
 
-        <section className="mb-6 bg-white p-4 rounded shadow">
-          <h2 className="font-semibold mb-2">Adicionar Storage</h2>
-          <form onSubmit={handleAdd} className="space-y-3">
+        <section className="bg-white rounded-lg shadow p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-3">Adicionar Storage</h2>
+
+          <form className="space-y-3" onSubmit={(e) => { e.preventDefault(); handleAdd(); }}>
             <div>
-              <label className="block text-sm">Nome</label>
-              <input value={form.name} onChange={(e)=>setForm({...form, name:e.target.value})}
-                className="w-full border px-3 py-2 rounded" required />
+              <label className="block text-sm font-medium">Nome</label>
+              <input
+                className="w-full px-3 py-2 border rounded"
+                value={form.name}
+                onChange={(ev) => updateField("name", ev.target.value)}
+                placeholder="ex: Supabase - Primary"
+                required
+              />
             </div>
 
             <div>
-              <label className="block text-sm">Tipo</label>
-              <select value={form.type} onChange={(e)=>setForm({...form, type:e.target.value})}
-                className="w-full border px-3 py-2 rounded">
+              <label className="block text-sm font-medium">Tipo</label>
+              <select
+                className="w-full px-3 py-2 border rounded"
+                value={form.type}
+                onChange={(ev) => updateField("type", ev.target.value)}
+              >
                 <option value="supabase">Supabase</option>
                 <option value="cloudinary">Cloudinary</option>
-                <option value="s3">S3-Compatible</option>
-                <option value="other">Other (custom)</option>
+                <option value="s3">S3 (compatible)</option>
+                <option value="custom">Custom / Other</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-sm">Base URL</label>
-              <input value={form.base_url} onChange={(e)=>setForm({...form, base_url:e.target.value})}
-                className="w-full border px-3 py-2 rounded" placeholder="https://..." />
+              <label className="block text-sm font-medium">Base URL</label>
+              <input
+                className="w-full px-3 py-2 border rounded"
+                value={form.base_url}
+                onChange={(ev) => updateField("base_url", ev.target.value)}
+                placeholder="https://..."
+              />
             </div>
 
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm">Public Key</label>
-                <input value={form.public_key} onChange={(e)=>setForm({...form, public_key:e.target.value})}
-                  className="w-full border px-3 py-2 rounded" />
+                <label className="block text-sm font-medium">Public Key</label>
+                <input
+                  className="w-full px-3 py-2 border rounded"
+                  value={form.public_key}
+                  onChange={(ev) => updateField("public_key", ev.target.value)}
+                />
               </div>
               <div>
-                <label className="block text-sm">Private Key</label>
-                <input value={form.private_key} onChange={(e)=>setForm({...form, private_key:e.target.value})}
-                  className="w-full border px-3 py-2 rounded" />
+                <label className="block text-sm font-medium">Private Key</label>
+                <input
+                  className="w-full px-3 py-2 border rounded"
+                  value={form.private_key}
+                  onChange={(ev) => updateField("private_key", ev.target.value)}
+                />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm">Priority (0 = highest)</label>
-              <input value={form.priority} onChange={(e)=>setForm({...form, priority:e.target.value})}
-                className="w-full border px-3 py-2 rounded" type="number" />
+              <label className="block text-sm font-medium">Priority (0 = highest)</label>
+              <input
+                type="number"
+                className="w-40 px-3 py-2 border rounded"
+                value={form.priority}
+                onChange={(ev) => updateField("priority", ev.target.value)}
+                min={0}
+              />
             </div>
 
-            {err && <div className="text-red-600">{err}</div>}
+            {err && <div className="text-sm text-red-600">{err}</div>}
+            {success && <div className="text-sm text-green-600">{success}</div>}
 
             <div className="flex items-center gap-3">
-              <button type="submit" disabled={saving}
-                className="bg-teal-600 text-white px-4 py-2 rounded">
-                {saving ? "Salvando…" : "Adicionar Storage"}
+              <button
+                type="button"
+                onClick={() => handleAdd()}
+                disabled={saving}
+                className="bg-teal-600 text-white px-4 py-2 rounded"
+              >
+                {saving ? "Salvando..." : "Adicionar Storage"}
               </button>
-              <button type="button" onClick={fetchList} className="text-sm text-slate-600 underline">Atualizar lista</button>
+
+              <button
+                type="button"
+                onClick={() => fetchList()}
+                className="bg-slate-100 px-3 py-2 rounded"
+              >
+                Atualizar lista
+              </button>
             </div>
           </form>
         </section>
 
-        <section className="bg-white p-4 rounded shadow">
-          <h2 className="font-semibold mb-2">Storages cadastrados</h2>
-          {loading ? <div>Carregando…</div> : (
-            <ul className="space-y-2">
-              {list.length===0 && <li className="text-sm text-slate-600">Nenhum storage cadastrado.</li>}
-              {list.map(s => (
-                <li key={s.id} className="p-3 border rounded flex justify-between items-center">
+        <section className="bg-white rounded-lg shadow p-6">
+          <h2 className="text-xl font-semibold mb-3">Storages cadastrados</h2>
+
+          {loading ? (
+            <div>Carregando...</div>
+          ) : list.length === 0 ? (
+            <div className="text-sm text-slate-500">Nenhum storage cadastrado.</div>
+          ) : (
+            <div className="space-y-3">
+              {list.map((s) => (
+                <div key={s.id} className="p-3 border rounded flex justify-between items-center">
                   <div>
                     <div className="font-semibold">{s.name} <span className="text-xs text-slate-500">({s.type})</span></div>
-                    <div className="text-xs text-slate-500">{s.base_url || "—"}</div>
+                    <div className="text-sm text-slate-600">{s.base_url || "—"}</div>
+                    <div className="text-xs text-slate-400">priority: {s.priority ?? "0"}</div>
                   </div>
-                  <div className="text-sm text-slate-500">prio: {s.priority ?? 0}</div>
-                </li>
+                  <div className="text-right">
+                    <div className="text-sm text-slate-500">{s.created_at ? new Date(s.created_at).toLocaleString() : ""}</div>
+                  </div>
+                </div>
               ))}
-            </ul>
+            </div>
           )}
         </section>
       </div>
