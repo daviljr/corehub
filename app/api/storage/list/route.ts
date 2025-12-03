@@ -3,12 +3,10 @@ import { supabase } from "@/lib/supabase";
 
 export async function GET() {
   try {
-    // tentamos ler file_references (order by priority asc, created_at desc)
     const { data, error } = await supabase
-      .from("file_references")
+      .from("storage_services")
       .select("*")
-      .order("priority", { ascending: true })
-      .order("created_at", { ascending: false });
+      .order("score", { ascending: false });
 
     if (error) {
       console.error("Supabase error (GET /api/storage/list):", error);
@@ -18,6 +16,6 @@ export async function GET() {
     return NextResponse.json({ ok: true, data: data || [] });
   } catch (e: any) {
     console.error("Unexpected error (GET /api/storage/list):", e);
-    return NextResponse.json({ ok: false, error: (e && e.message) || String(e) }, { status: 500 });
+    return NextResponse.json({ ok: false, error: e.message || "Unknown error" }, { status: 500 });
   }
 }
