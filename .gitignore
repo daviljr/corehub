@@ -1,2 +1,4 @@
 .vercel
 system_core/
+.env
+.env.local
