@@ -14,9 +14,25 @@ function unauthorized() {
   return new NextResponse(JSON.stringify({ error: "unauthorized" }), { status: 401 });
 }
 
+function getAuthFromRequest(req: NextRequest) {
+  // cookie
+  const cookie = req.cookies?.get?.("corehub_admin")?.value || "";
+  // header x-admin-secret
+  const header = req.headers.get("x-admin-secret") || "";
+  // authorization Bearer
+  const bearer = req.headers.get("authorization")?.replace(/^Bearer\s+/i, "") || "";
+  return { cookie, header, bearer };
+}
+
+function isAuthorized({ cookie, header, bearer }: { cookie: string; header: string; bearer: string }) {
+  if (!ADMIN_SECRET) return false;
+  // accept if any equals ADMIN_SECRET
+  return cookie === ADMIN_SECRET || header === ADMIN_SECRET || bearer === ADMIN_SECRET;
+}
+
 export async function GET(req: NextRequest) {
-  const cookie = req.cookies.get("corehub_admin")?.value;
-  if (!cookie || cookie !== ADMIN_SECRET) return unauthorized();
+  const auth = getAuthFromRequest(req);
+  if (!isAuthorized(auth)) return unauthorized();
 
   const { data, error } = await supabase
     .from("products")
@@ -31,8 +47,8 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const cookie = req.cookies.get("corehub_admin")?.value;
-  if (!cookie || cookie !== ADMIN_SECRET) return unauthorized();
+  const auth = getAuthFromRequest(req);
+  if (!isAuthorized(auth)) return unauthorized();
 
   const body = await req.json().catch(() => ({}));
 
@@ -67,5 +83,6 @@ export async function POST(req: NextRequest) {
     return new NextResponse(JSON.stringify({ error: error.message }), { status: 500 });
   }
 
-  return NextResponse.json({ data });
+  // retornar 201 quando criado
+  return new NextResponse(JSON.stringify({ data }), { status: 201 });
 }
