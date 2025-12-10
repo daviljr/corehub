@@ -2,3 +2,4 @@
 system_core/
 .env
 .env.local
+.env*.local
