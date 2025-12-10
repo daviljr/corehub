@@ -1,6 +1,6 @@
 import { getProductById, getProducts } from "@/lib/products";
 import AddToCartButton from "@/components/AddToCartButton";
-import ProductCard from "@/components/ProductCard";
+import ProductCard from "../../components/ProductCard";
 
 type Props = {
   params: { id: string };
