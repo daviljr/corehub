@@ -1,6 +1,5 @@
 import { getProductById, getProducts } from "@/lib/products";
 import AddToCartButton from "@/components/AddToCartButton";
-import ProductCard from "../../components/ProductCard";
 
 type Props = {
   params: { id: string };
@@ -70,7 +69,6 @@ export default async function ProductPage({ params }: Props) {
         <div className="bg-white p-4 rounded-lg shadow-sm">
           <h4 className="font-semibold mb-3">Produtos relacionados</h4>
           <div className="grid grid-cols-1 gap-3">
-            {related.map((r: any) => <ProductCard key={r.id} product={r} />)}
           </div>
         </div>
       </aside>
