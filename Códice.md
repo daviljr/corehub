@@ -83,3 +83,53 @@ git commit -m "docs(codice): inicializa Códice — bloco 1 (introducao & protoc
 - **.gitignore:** deve conter `.backups/` e `*.bak` (já configurado).
 - **Motivo:** mantém o repositório limpo, preserva histórico e evita confusão.
 
+
+---
+
+# B. Estrutura Oficial do CoreHub
+> Este bloco define o **mapa do sistema**.  
+> Nada pode ser criado fora dessa estrutura sem patch aprovado pelo Guardião.
+
+## 1. Raiz do Projeto
+- `app/` — Frontend Next.js (páginas, rotas, UI)
+- `lib/` — Lógica compartilhada (supabase, produtos, utilidades)
+- `components/` — Componentes isolados de UI
+- `scripts/` — Scripts de manutenção e automação
+- `public/` — Imagens públicas, icons, manifest
+- `data/` — Banco local fallback (db.json)
+- `memory/` — (reservado) conteúdos de IA internos
+- `PATCHES/` — patches oficiais gerados pelo Guardião
+- `.backups/` — sistema de backup automático
+- `Códice.md` — Documento de autoridade máxima
+- `Journal.md` — Registro diário cronológico
+- `TODO.md` — Prioridades
+- `corehub_structure.txt` — snapshot técnico da árvore do projeto
+
+## 2. Estrutura detalhada de /app
+- `/app/page.tsx` → homepage oficial
+- `/app/layout.tsx` → layout global (header/footer)
+- `/app/store/` → páginas da loja
+- `/app/store/product/[id]/` → página individual de produto
+- `/app/api/` → APIs internas
+- `/app/admin/` → painel administrativo (protegido)
+- `/app/cart/` → carrinho
+- `/app/checkout/` → checkout
+- `/app/blog/` → blog
+
+## 3. Estrutura de /lib
+- `lib/products.ts` → fonte da verdade sobre produtos
+- `lib/supabase.ts` → cliente supabase
+- `lib/image.ts` → manipulação de imagens
+- `lib/orchestrator.ts` → automações internas
+- `lib/crypto.ts` → utilidades criptográficas
+
+## 4. Estrutura de /scripts
+- `snapshot.sh` — gera mapa completo do sistema
+- `validate.sh` — valida integridade futura do Códice
+- `sync_categories.ts` — script planejado (categoria inteligente)
+
+## 5. Regras de criação e manutenção
+- Apenas o Guardião define novas pastas.
+- Qualquer adição deve ser documentada neste bloco (B) com patch.
+- Nada pode ser renomeado sem patch e referência no Journal.
+
