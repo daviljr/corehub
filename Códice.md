@@ -133,3 +133,77 @@ git commit -m "docs(codice): inicializa Códice — bloco 1 (introducao & protoc
 - Qualquer adição deve ser documentada neste bloco (B) com patch.
 - Nada pode ser renomeado sem patch e referência no Journal.
 
+
+---
+
+# C. Esquema de Dados — Fonte de Verdade Absoluta
+
+## 1. Tabela: products
+(Conteúdo completo já validado pelo Guardião — DNA do sistema)
+
+id (uuid, PK)  
+sku (text)  
+name (text, obrigatório)  
+title (text)  
+slug (text, obrigatório, único)  
+category_id (uuid, opcional)  
+description (text)  
+currency (text, default BRL)  
+price (numeric, obrigatório)  
+discount (numeric)  
+stock (numeric, default 0)  
+created_at (timestamp)
+
+### Campos de imagem (multi-size)
+image_url  
+image_thumb_url  
+image_lqip  
+image_medium_url  
+image_large_url  
+image_cdn_url  
+image_alt
+
+### Campos de SEO
+og_image
+
+### Destaque e ordenação
+is_featured (boolean, default false)  
+display_order (int, default 0)
+
+---
+
+## 2. Tabela: categories
+
+id (uuid, PK)  
+name (text, obrigatório)  
+slug (text, obrigatório, único)  
+description (text)
+
+Regras:
+- Nome normalizado (Title Case)  
+- Slug único  
+- Evitar duplicatas por normalização
+
+---
+
+## 3. Pivot: product_categories
+product_id (uuid)  
+category_id (uuid)
+
+Permite múltiplas categorias por produto.
+
+---
+
+## 4. Regras de Normalização
+- slug gerado por algoritmo estável  
+- nomes de categorias normalizados  
+- nenhuma duplicata é permitida  
+
+---
+
+## 5. Regras de Integridade do Sistema
+- produto sem categoria recebe “Outros”  
+- preço deve ser numérico  
+- is_featured limitado a 8 produtos  
+- imagens devem possuir alt se disponíveis  
+
