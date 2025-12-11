@@ -14,3 +14,17 @@ Pendências:
 Próximo passo:
 - 
 ---
+
+Data: 2025-12-11
+O que vou fazer hoje:
+- Ajustar upload de imagem & patch automático
+
+Resultado / commit (após terminar):
+- commit:
+
+Pendências:
+- 
+
+Próximo passo:
+- 
+---
