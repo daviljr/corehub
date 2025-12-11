@@ -3,3 +3,7 @@ system_core/
 .env
 .env.local
 .env*.local
+.backups/
+*.bak
+corehub_structure.txt
+node_modules/
