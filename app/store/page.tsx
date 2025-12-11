@@ -1,59 +1,41 @@
-// app/store/page.tsx
-import Link from "next/link";
-import ProductCard from "../components/ProductCard";
-import { getProducts, getCategories } from "../../lib/products";
+import { getProducts } from "@/lib/products";
+import dynamic from "next/dynamic";
+import type { Product, ProductCategory } from "@/lib/products";
+import React from "react";
 
-type Props = {
-  searchParams?: { category?: string };
-};
+const StoreClient = dynamic(() => import("./StoreClient"), { ssr: false });
 
-export default async function StorePage({ searchParams }: Props) {
-  const [products, categories] = await Promise.all([getProducts(), getCategories()]);
-  const categorySlug = (searchParams?.category || "").trim();
+export default async function StorePage() {
+  const products = (await getProducts()) as Product[];
 
-  // If category selected, try to find category object (for title)
-  const currentCategory = (categories || []).find((c: any) => c.slug === categorySlug || c.id === categorySlug);
+  // derive categories from products
+  const map: Record<string, ProductCategory> = {};
+  (products || []).forEach((p: any) => {
+    if (Array.isArray(p.categories) && p.categories.length) {
+      p.categories.forEach((c: any) => {
+        if (!c) return;
+        const key = c.id || String(c.slug || c.name);
+        if (!map[key]) map[key] = { id: c.id || key, name: c.name || c.slug || key, slug: c.slug || key };
+      });
+    } else if (p.category_id) {
+      const id = String(p.category_id);
+      if (!map[id]) map[id] = { id, name: "Categoria", slug: id };
+    }
+  });
 
-  // filter products by category slug / id / product.categories pivot
-  let visibleProducts = products || [];
-  if (categorySlug) {
-    visibleProducts = (products || []).filter((p: any) => {
-      // direct category_id match
-      if (p.category_id && String(p.category_id) === categorySlug) return true;
-      // product's categories pivot
-      if (p.categories && Array.isArray(p.categories) && p.categories.some((c: any) => c && (c.slug === categorySlug || String(c.id) === categorySlug))) return true;
-      // product slug match (if you want products reachable by slug search)
-      if (p.slug && p.slug === categorySlug) return true;
-      return false;
-    });
-  }
+  const categories = Object.values(map).slice(0, 50);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Loja Sheidbox</h1>
-          <p className="text-sm text-slate-600">Produtos premium & pacotes — encontre conforto e segurança</p>
-        </div>
-        <div className="text-sm text-slate-500">
-          {categorySlug ? (
-            <>
-              Categoria: <span className="font-medium">{currentCategory?.name || categorySlug}</span> · {visibleProducts.length} produto(s)
-            </>
-          ) : (
-            <>Produtos premium & pacotes</>
-          )}
-        </div>
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-3xl font-bold">Loja Sheidbox</h1>
       </div>
 
-      {/* Grid principal */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-        {visibleProducts.length === 0 ? (
-          <div className="col-span-full text-slate-500">Nenhum produto encontrado para essa categoria.</div>
-        ) : (
-          visibleProducts.map((p: any) => <ProductCard key={p.id} product={p} />)
-        )}
-      </div>
+      {/* render client that handles filtering */}
+      {/* Note: products and categories are serialized and passed to the client component */}
+      {/* StoreClient is client-only (ssr: false) to run filtering purely on client */}
+      {/* @ts-expect-error Server -> Client serialization allowed by Next.js */}
+      <StoreClient products={products} categories={categories} />
     </div>
   );
 }
