@@ -79,6 +79,36 @@ function normalizeProduct(raw: any): Product {
   } as Product;
 }
 
+/**
+ * Fetch categories list from Supabase.
+ * Returns [] on error or when env is not set.
+ */
+export async function getCategories(): Promise<ProductCategory[]> {
+  try {
+    if (process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      const { data, error } = await supabase
+        .from("categories")
+        .select("id, name, slug")
+        .order("name", { ascending: true })
+        .limit(500);
+
+      if (error) {
+        console.error("Supabase error (getCategories):", error);
+        return [];
+      }
+      // normalize basic shape
+      return (data ?? []).map((c: any) => ({
+        id: c.id,
+        name: c.name ?? c.slug ?? "Categoria",
+        slug: c.slug ?? String(c.id),
+      })) as ProductCategory[];
+    }
+  } catch (err) {
+    console.error("Exception getCategories:", err);
+  }
+  return [];
+}
+
 async function fetchProductsFromSupabase(): Promise<Product[]> {
   try {
     // fetch all product columns
