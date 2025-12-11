@@ -325,3 +325,38 @@ CRUD de ideias administrativas. Não crítico para fluxo de vendas.
 ### 6. Consistência
 Qualquer componente ou página que viole esse padrão deve ser corrigido através de patch oficial, registrado neste Códice.
 
+
+---
+
+## E.2 — ProductCard (Componente Oficial)
+
+Caminho: app/components/ProductCard.tsx
+
+Props:
+- product: Product — tipo Product (ver bloco C);
+- useSlug?: boolean — quando true usa product.slug como identificador na rota.
+
+Comportamento:
+- Card clicável que leva para /store/product/:id ou /store/product/:slug quando useSlug é true.
+- Exibe imagem (thumb -> image_url -> placeholder).
+- Mostra preço formatado via Intl.NumberFormat('pt-BR').
+- Badge "Esgotado" quando stock <= 0.
+- Limita badges de categoria a 3.
+- Usa AddToCartButton para ação rápida de compra.
+- Acessibilidade: aria-labelledby, alt nas imagens, title nos links.
+- Estilo: conforme E.1 (Tailwind) — rounded-lg, shadow-sm, hover:shadow-lg, line-clamp-2 para descrição.
+
+Regras:
+- Sempre em TypeScript (.tsx).
+- Não faz fetch — recebe product via props.
+- Não manipula global state diretamente — usa AddToCartButton para operação de carrinho.
+- Import paths: preferir alias "@/..." ou relativos consistentes com o projeto.
+
+Exemplo de uso (colocar exatamente como abaixo em um .tsx):
+  <ProductCard product={p} />
+  <ProductCard product={p} useSlug />
+
+Observações:
+- Caso precise referenciar o componente fora de app/, use o alias "@/components/ProductCard" se o tsconfig/jsconfig estiver configurado.
+- Se quer que o link use slug, garanta product.slug existir e ser único.
+
