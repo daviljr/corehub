@@ -279,3 +279,49 @@ Retorno:
 ## 7. /api/admin/ideas
 CRUD de ideias administrativas. Não crítico para fluxo de vendas.
 
+
+---
+
+# E. Componentes e UI — Padrões Visuais do CoreHub
+
+## E.1 — Biblioteca Visual Base (UI Base)
+
+### 1. Cores Oficiais (Tailwind)
+- Primária: `emerald-600`
+- Primária clara: `emerald-500`
+- Acento: `teal-500`
+- Texto principal: `slate-800`
+- Texto suave: `slate-600`
+- Fundo claro: `white`
+- Fundo suave: `slate-50`
+- Erro: `red-500`
+
+### 2. Bordas e sombras
+- Raio padrão: `rounded-lg`
+- Raio forte: `rounded-xl`
+- Sombra padrão: `shadow`
+- Sombra forte: `shadow-lg`
+
+### 3. Espaçamentos
+- Mínimo interno: `p-4`
+- Cartões: `p-4 md:p-6`
+- Layouts: `max-w-6xl mx-auto px-4`
+
+### 4. Tipografia
+- Títulos: `font-bold text-2xl md:text-3xl`
+- Subtítulos: `font-semibold text-lg`
+- Texto normal: `text-base text-slate-700`
+- Texto suave: `text-sm text-slate-600`
+
+### 5. Regras UX fundamentais
+- Todos os botões utilizam:
+  - `px-4 py-2 rounded-md font-semibold`
+- Em mobile, elementos clicáveis ocupam largura confortável:
+  - `w-full md:w-auto`
+- Imagens sempre com `object-cover` e `rounded-lg`
+- Cards sempre clicáveis com:
+  - `hover:shadow-lg transition`
+
+### 6. Consistência
+Qualquer componente ou página que viole esse padrão deve ser corrigido através de patch oficial, registrado neste Códice.
+
