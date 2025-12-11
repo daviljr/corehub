@@ -70,3 +70,16 @@ J. Histórico de decisões — registro de motivos por trás de mudanças
 ```bash
 git add "Códice.md" || true
 git commit -m "docs(codice): inicializa Códice — bloco 1 (introducao & protocolo)" || true
+
+### 5.1 Backup & arquivos .bak (Regra)
+- **Regra:** Arquivos com extensão `.bak` **não devem permanecer** no repositório.
+- **Procedimento obrigatório ao encontrar `.bak`:**
+  1. Gerar snapshot: `./scripts/snapshot.sh`
+  2. Criar pasta de backup com timestamp: `.backups/auto_bak_<YYYYMMDDHHMMSS>/`
+  3. Mover os arquivos `.bak` para essa pasta (preservando estrutura)
+  4. `git add .backups/auto_bak_<timestamp>` e `git rm <arquivos .bak>`
+  5. `git commit -m "chore(core): move *.bak to .backups/auto_bak_<timestamp>"`
+  6. Atualizar `Journal.md` com referência ao commit
+- **.gitignore:** deve conter `.backups/` e `*.bak` (já configurado).
+- **Motivo:** mantém o repositório limpo, preserva histórico e evita confusão.
+
