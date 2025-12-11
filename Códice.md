@@ -360,3 +360,27 @@ Observações:
 - Caso precise referenciar o componente fora de app/, use o alias "@/components/ProductCard" se o tsconfig/jsconfig estiver configurado.
 - Se quer que o link use slug, garanta product.slug existir e ser único.
 
+
+---
+
+## E.3 — Regras e Templates de Componentes
+
+Regras obrigatórias:
+- Linguagem: TypeScript (.tsx) — nada de .js novo.
+- Estilo: Tailwind CSS exclusivamente (nenhum CSS global inline sem justificativa).
+- Componentes: PascalCase, um componente por arquivo.
+- Props sempre tipadas e não-ambíguas.
+- Sem fetch direto em componentes — somente via `lib/*` ou via props server->client.
+- Componentes client-only devem usar `"use client";` no topo.
+- Imagens: usar `loading="lazy"` e `decoding="async"`.
+- Acessibilidade: sempre `alt` em imagens, `aria-*` quando necessário.
+- Testes: componentes críticos devem ter smoke tests em scripts/ (opcional inicial).
+- Documentação: cada componente criado deve ter um bloco no Códice (caminho, props, comportamento, exemplo de uso).
+
+Template de criação de novo componente:
+1. Criar `app/components/NomeDoComponente.tsx`
+2. Escrever tipagem `type Props = { ... }`
+3. Export default function `NomeDoComponente(props: Props) { ... }`
+4. Adicionar entrada no Códice (E.x) e commitar
+5. Atualizar `Journal.md` com commit hash e objetivo
+
