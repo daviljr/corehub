@@ -207,3 +207,75 @@ Permite múltiplas categorias por produto.
 - is_featured limitado a 8 produtos  
 - imagens devem possuir alt se disponíveis  
 
+
+---
+
+# D. Rotas API — Contratos Oficiais do CoreHub
+
+## 1. Autenticação Admin
+Rotas admin exigem:
+- Header: x-admin-secret: <ADMIN_SECRET>
+OU
+- Cookie: corehub_admin=<ADMIN_SECRET>
+
+Sem isso: 401 unauthorized.
+
+---
+
+## 2. /api/admin/auth (POST)
+Body:
+{ "secret": "<ADMIN_SECRET>" }
+
+Retorno:
+{ "ok": true }
+
+---
+
+## 3. /api/admin/products
+
+### GET
+Retorna lista de produtos (máx 500).
+Campos: id, name, slug, price, stock, image_url, image_thumb_url, created_at.
+
+### POST — criar produto
+Body obrigatório:
+{
+  "name": "...",
+  "slug": "...",
+  "price": number,
+  "stock": number
+}
+
+### POST — atualizar imagens
+Body:
+{
+  "update_image_for_id": "<uuid>",
+  "image_url": "...",
+  "image_thumb_url": "..."
+}
+
+---
+
+## 4. /api/storage/register (POST)
+Recebe dados de upload e retorna URLs públicas.
+Body: filename, mimetype, size, slug
+
+Retorno:
+{ "public_url": "...", "thumb_url": "..." }
+
+---
+
+## 5. /api/storage/list (GET)
+Lista arquivos do bucket público.
+
+---
+
+## 6. /api/ping
+Retorno:
+{ "pong": true }
+
+---
+
+## 7. /api/admin/ideas
+CRUD de ideias administrativas. Não crítico para fluxo de vendas.
+
