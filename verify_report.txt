@@ -1,0 +1,257 @@
+VERIFY REPORT
+Root: /storage/emulated/0/COREHUB
+============================================================
+
+TOTAL SOURCE FILES: 54
+
+ZERO-BYTE FILES:
+
+
+
+IMPORTS FOUND (per file):
+
+app/account/page.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import '../../lib/supabase' -> MISSING
+app/admin/login/page.tsx:
+    line 2: import 'react' -> (package) react
+app/admin/organize/ideias/[id]/edit-form.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import 'next/navigation' -> (package) next/navigation
+app/admin/organize/ideias/[id]/page.tsx:
+    line 1: import '@/lib/ideas' -> (package) @/lib/ideas
+    line 2: import './edit-form' -> /storage/emulated/0/COREHUB/app/admin/organize/ideias/[id]/edit-form.tsx
+app/admin/organize/ideias/new/page.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import 'next/navigation' -> (package) next/navigation
+app/admin/organize/ideias/page.tsx:
+    line 1: import 'next/link' -> (package) next/link
+    line 2: import '@/lib/ideas' -> (package) @/lib/ideas
+app/admin/organize/produtos/page.tsx:
+    line 1: import 'next/link' -> (package) next/link
+app/admin/page.tsx:
+    line 2: import 'next/link' -> (package) next/link
+    line 3: import 'react' -> (package) react
+app/admin/products/page.tsx:
+    line 2: import 'react' -> (package) react
+    line 4: import '@/lib/supabase' -> (package) @/lib/supabase
+    line 5: import '@/lib/image' -> (package) @/lib/image
+app/admin/storage/page.tsx:
+    line 2: import 'react' -> (package) react
+app/api/admin/auth/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+app/api/admin/ideas/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@/lib/supabase' -> (package) @/lib/supabase
+app/api/admin/products/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import 'next/server' -> (package) next/server
+    line 3: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+app/api/auth/github/callback/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+    line 3: import '@/lib/crypto' -> (package) @/lib/crypto
+app/api/auth/github/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+app/api/auth/vercel/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+    line 3: import '@/lib/crypto' -> (package) @/lib/crypto
+app/api/ping/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+app/api/storage/list/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@/lib/supabase' -> (package) @/lib/supabase
+app/api/storage/orchestrator/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import 'next/server' -> (package) next/server
+    line 3: import '@/lib/orchestrator' -> (package) @/lib/orchestrator
+app/api/storage/register/route.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import '@/lib/supabase' -> (package) @/lib/supabase
+app/cart/page.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import 'next/link' -> (package) next/link
+app/checkout/page.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import 'next/navigation' -> (package) next/navigation
+app/components/AddToCartButton.tsx:
+    line 2: import 'react' -> (package) react
+app/components/MultiCategoryFilter.tsx:
+    line 2: import 'react' -> (package) react
+app/components/ProductCard.tsx:
+    line 2: import 'react' -> (package) react
+    line 4: import 'next/link' -> (package) next/link
+    line 5: import './AddToCartButton' -> /storage/emulated/0/COREHUB/app/components/AddToCartButton.tsx
+    line 6: import '@/lib/products' -> (package) @/lib/products
+app/layout.tsx:
+    line 1: import 'next/script' -> (package) next/script
+app/page.tsx:
+    line 1: import 'next/link' -> (package) next/link
+    line 2: import '@/app/components/ProductCard' -> (package) @/app/components/ProductCard
+    line 3: import '../lib/products' -> MISSING
+app/store/StoreClient.tsx:
+    line 2: import 'react' -> (package) react
+    line 3: import '@/lib/products' -> (package) @/lib/products
+    line 4: import '@/app/components/ProductCard' -> (package) @/app/components/ProductCard
+    line 5: import '@/app/components/MultiCategoryFilter' -> (package) @/app/components/MultiCategoryFilter
+app/store/page.tsx:
+    line 1: import '@/lib/products' -> (package) @/lib/products
+    line 2: import 'next/dynamic' -> (package) next/dynamic
+    line 3: import '@/lib/products' -> (package) @/lib/products
+    line 4: import 'react' -> (package) react
+app/store/product/[id]/page.tsx:
+    line 1: import '@/lib/products' -> (package) @/lib/products
+    line 2: import '@/app/components/AddToCartButton' -> (package) @/app/components/AddToCartButton
+lib/crypto.ts:
+    line 1: import 'crypto' -> (package) crypto
+lib/ideas.ts:
+    line 1: import './supabase' -> /storage/emulated/0/COREHUB/lib/supabase.ts
+lib/orchestrator.ts:
+    line 1: import './supabase' -> /storage/emulated/0/COREHUB/lib/supabase.ts
+lib/products.ts:
+    line 1: import 'fs' -> (package) fs
+    line 2: import 'path' -> (package) path
+    line 3: import './supabase' -> /storage/emulated/0/COREHUB/lib/supabase.ts
+lib/supabase.ts:
+    line 1: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+middleware.ts:
+    line 1: import 'next/server' -> (package) next/server
+    line 2: import 'next/server' -> (package) next/server
+scripts/syncCategories.ts:
+    line 2: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+    line 3: import 'slugify' -> (package) slugify
+scripts/sync_categories.ts:
+    line 2: import '@supabase/supabase-js' -> (package) @supabase/supabase-js
+    line 3: import 'slugify' -> (package) slugify
+
+
+MISSING IMPORT TARGETS (relative imports that could not be resolved):
+
+TARGET: ../../lib/supabase
+   referenced from: app/account/page.tsx:3
+TARGET: ../lib/products
+   referenced from: app/page.tsx:3
+
+
+RESOLVED REFERENCES (local files referenced):
+
+/storage/emulated/0/COREHUB/app/admin/organize/ideias/[id]/edit-form.tsx referenced from:
+   - app/admin/organize/ideias/[id]/page.tsx:2
+/storage/emulated/0/COREHUB/app/components/AddToCartButton.tsx referenced from:
+   - app/components/ProductCard.tsx:5
+/storage/emulated/0/COREHUB/lib/supabase.ts referenced from:
+   - lib/ideas.ts:1
+   - lib/orchestrator.ts:1
+   - lib/products.ts:3
+
+
+PACKAGE IMPORTS (non-relative) referenced from files:
+
+   - app/account/page.tsx:2
+   - app/admin/login/page.tsx:2
+   - app/admin/organize/ideias/[id]/edit-form.tsx:2
+   - app/admin/organize/ideias/new/page.tsx:2
+   - app/admin/page.tsx:3
+   - app/admin/products/page.tsx:2
+   - app/admin/storage/page.tsx:2
+   - app/cart/page.tsx:2
+   - app/checkout/page.tsx:2
+   - app/components/AddToCartButton.tsx:2
+   - app/components/MultiCategoryFilter.tsx:2
+   - app/components/ProductCard.tsx:2
+   - app/store/StoreClient.tsx:2
+   - app/store/page.tsx:4
+   - app/admin/organize/ideias/[id]/edit-form.tsx:3
+   - app/admin/organize/ideias/new/page.tsx:3
+   - app/checkout/page.tsx:3
+   - app/admin/organize/ideias/[id]/page.tsx:1
+   - app/admin/organize/ideias/page.tsx:2
+   - app/admin/organize/ideias/page.tsx:1
+   - app/admin/organize/produtos/page.tsx:1
+   - app/admin/page.tsx:2
+   - app/cart/page.tsx:3
+   - app/components/ProductCard.tsx:4
+   - app/page.tsx:1
+   - app/admin/products/page.tsx:4
+   - app/api/admin/ideas/route.ts:2
+   - app/api/storage/list/route.ts:2
+   - app/api/storage/register/route.ts:2
+   - app/admin/products/page.tsx:5
+   - app/api/admin/auth/route.ts:1
+   - app/api/admin/ideas/route.ts:1
+   - app/api/admin/products/route.ts:1
+   - app/api/admin/products/route.ts:2
+   - app/api/auth/github/callback/route.ts:1
+   - app/api/auth/github/route.ts:1
+   - app/api/auth/vercel/route.ts:1
+   - app/api/ping/route.ts:1
+   - app/api/storage/list/route.ts:1
+   - app/api/storage/orchestrator/route.ts:1
+   - app/api/storage/orchestrator/route.ts:2
+   - app/api/storage/register/route.ts:1
+   - middleware.ts:1
+   - middleware.ts:2
+   - app/api/admin/products/route.ts:3
+   - app/api/auth/github/callback/route.ts:2
+   - app/api/auth/vercel/route.ts:2
+   - app/api/ping/route.ts:2
+   - lib/supabase.ts:1
+   - scripts/syncCategories.ts:2
+   - scripts/sync_categories.ts:2
+   - app/api/auth/github/callback/route.ts:3
+   - app/api/auth/vercel/route.ts:3
+   - app/api/storage/orchestrator/route.ts:3
+   - app/components/ProductCard.tsx:6
+   - app/store/StoreClient.tsx:3
+   - app/store/page.tsx:1
+   - app/store/page.tsx:3
+   - app/store/product/[id]/page.tsx:1
+   - app/layout.tsx:1
+   - app/page.tsx:2
+   - app/store/StoreClient.tsx:4
+   - app/store/StoreClient.tsx:5
+   - app/store/page.tsx:2
+   - app/store/product/[id]/page.tsx:2
+   - lib/crypto.ts:1
+   - lib/products.ts:1
+   - lib/products.ts:2
+   - scripts/syncCategories.ts:3
+   - scripts/sync_categories.ts:3
+
+
+ORPHAN FILES (not referenced/imported and not in app/pages/lib/data/public):
+
+  - .vercel/project.json
+  - jsconfig.json
+  - package-lock.json
+  - package.json
+  - postcss.config.cjs
+  - tailwind.config.cjs
+  - tsconfig.json
+
+
+process.env usages:
+
+ app/api/admin/auth/route.ts: ADMIN_SECRET
+ app/api/admin/products/route.ts: ADMIN_SECRET, NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ app/api/auth/github/callback/route.ts: APP_BASE_URL, GITHUB_CLIENT_ID, SUPABASE_SERVICE_ROLE_KEY, GITHUB_CLIENT_SECRET, NEXT_PUBLIC_SUPABASE_URL
+ app/api/auth/github/route.ts: APP_BASE_URL, GITHUB_CLIENT_ID
+ app/api/auth/vercel/route.ts: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ app/api/ping/route.ts: NODE_ENV, SUPABASE_SERVICE_KEY, NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+ lib/crypto.ts: APP_MASTER_KEY
+ lib/products.ts: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+ lib/supabase.ts: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_ANON_KEY
+ middleware.ts: ADMIN_SECRET
+ scripts/syncCategories.ts: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+ scripts/sync_categories.ts: NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY
+
+
+SUMMARY STATS:
+
+  source files: 54
+  imports-containing files: 38
+  missing import targets: 2
+  orphan candidate files: 7
+  zero-byte files: 0
