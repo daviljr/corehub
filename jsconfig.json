@@ -2,13 +2,27 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"],
-      "@components/*": ["app/components/*"],
-      "@/components/*": ["app/components/*"],
-      "@lib/*": ["lib/*"],
-      "@/lib/*": ["lib/*"],
-      "@app/*": ["app/*"],
-      "@/app/*": ["app/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@components/*": [
+        "app/components/*"
+      ],
+      "@lib/*": [
+        "lib/*"
+      ],
+      "@/lib/*": [
+        "lib/*"
+      ],
+      "@app/*": [
+        "app/*"
+      ],
+      "@/app/*": [
+        "app/*"
+      ],
+      "@/app/components/*": [
+        "app/components/*"
+      ]
     },
     "target": "ES2020",
     "moduleResolution": "node",
@@ -17,6 +31,17 @@
     "resolveJsonModule": true,
     "skipLibCheck": true
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"],
-  "exclude": ["node_modules", ".next", "out", "dist"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx"
+  ],
+  "exclude": [
+    "node_modules",
+    ".next",
+    "out",
+    "dist"
+  ]
 }

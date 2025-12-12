@@ -357,7 +357,7 @@ Exemplo de uso (colocar exatamente como abaixo em um .tsx):
   <ProductCard product={p} useSlug />
 
 Observações:
-- Caso precise referenciar o componente fora de app/, use o alias "@/components/ProductCard" se o tsconfig/jsconfig estiver configurado.
+- Caso precise referenciar o componente fora de app/, use o alias "@/app/components/ProductCard" se o tsconfig/jsconfig estiver configurado.
 - Se quer que o link use slug, garanta product.slug existir e ser único.
 
 
