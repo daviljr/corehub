@@ -34,7 +34,6 @@ export default async function StorePage() {
       {/* render client that handles filtering */}
       {/* Note: products and categories are serialized and passed to the client component */}
       {/* StoreClient is client-only (ssr: false) to run filtering purely on client */}
-      {/* @ts-expect-error Server -> Client serialization allowed by Next.js */}
       <StoreClient products={products} categories={categories} />
     </div>
   );
