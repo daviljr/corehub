@@ -2,7 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import AddToCartButton from '../../components/AddToCartButton';
+import AddToCartButton from './AddToCartButton';
 import type { Product } from "@/lib/products";
 
 type Props = {
