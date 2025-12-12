@@ -1,0 +1,6 @@
+ ⚠ Trying to load next-swc for target triple [object Object], but this target is not supported
+   ▲ Next.js 14.0.0
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+ ⨯ Failed to load SWC binary for android/arm64, see more info here: https://nextjs.org/docs/messages/failed-loading-swc
