@@ -20,6 +20,5 @@
     "tailwindcss": "^3.4.8",
     "postcss": "8.4.24",
     "autoprefixer": "10.4.14",
-    "@types/slugify": "^1.4.3"
   }
 }
