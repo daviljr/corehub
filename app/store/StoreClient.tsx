@@ -1,8 +1,8 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import type { Product, ProductCategory } from "@/lib/products";
-import ProductCard from "@/components/ProductCard";
-import MultiCategoryFilter from "@/components/MultiCategoryFilter";
+import ProductCard from '../components/ProductCard';
+import MultiCategoryFilter from '../components/MultiCategoryFilter';
 
 type Props = {
   products: Product[];
