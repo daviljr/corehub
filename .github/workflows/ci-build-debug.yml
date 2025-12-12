@@ -1,0 +1,60 @@
+name: CI - Build (Next.js) - debug
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Show repo info
+        run: |
+          echo "=== Repo root: $(pwd) ==="
+          echo "Git branch: $(git rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+          echo "Last commit:"
+          git --no-pager log -1 --pretty=oneline || true
+
+      - name: Setup Node.js (stable LTS 18)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          check-latest: true
+
+      - name: Show Node & NPM versions
+        run: |
+          node -v || true
+          npm -v || true
+          echo "npm config list:"
+          npm config list || true
+
+      - name: Workspace listing (quick)
+        run: |
+          ls -la
+          echo "---- package.json ----"
+          sed -n '1,200p' package.json || true
+
+      - name: Install dependencies (CI-safe)
+        run: |
+          npm ci --no-audit --no-fund
+        env:
+          CI: true
+
+      - name: Print installed node modules summary
+        run: |
+          echo "node_modules size:"
+          du -sh node_modules || true
+          echo "list top packages:"
+          ls -la node_modules | head -n 40 || true
+
+      - name: Build (Next)
+        run: |
+          npm run build
+
+      - name: Success marker
+        run: echo "BUILD SUCCEEDED"
