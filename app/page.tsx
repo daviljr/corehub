@@ -1,5 +1,5 @@
 import Link from "next/link";
-import ProductCard from "./components/ProductCard";
+import ProductCard from "@/app/components/ProductCard";
 import { getProducts, getCategories } from "../lib/products";
 
 export default async function Home() {

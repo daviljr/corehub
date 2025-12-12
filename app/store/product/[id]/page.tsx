@@ -1,5 +1,5 @@
 import { getProductById, getProducts } from "@/lib/products";
-import AddToCartButton from '../../../components/AddToCartButton';
+import AddToCartButton from '@/app/components/AddToCartButton';
 
 type Props = {
   params: { id: string };
