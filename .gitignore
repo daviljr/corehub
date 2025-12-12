@@ -7,3 +7,4 @@ system_core/
 *.bak
 corehub_structure.txt
 node_modules/
+.next
