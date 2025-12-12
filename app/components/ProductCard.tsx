@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import AddToCartButton from './AddToCartButton';
-import type { Product } from "@/lib/products";
+import type { Product } from "../../lib/products";
 
 type Props = {
   product: Product;

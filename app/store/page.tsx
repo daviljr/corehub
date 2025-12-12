@@ -1,6 +1,6 @@
-import { getProducts } from "@/lib/products";
+import { getProducts } from "../../lib/products";
 import dynamic from "next/dynamic";
-import type { Product, ProductCategory } from "@/lib/products";
+import type { Product, ProductCategory } from "../../lib/products";
 import React from "react";
 
 const StoreClient = dynamic(() => import("./StoreClient"), { ssr: false });
