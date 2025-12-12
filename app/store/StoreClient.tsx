@@ -1,6 +1,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
-import type { Product, ProductCategory } from "@/lib/products";
+import type { Product, ProductCategory } from "../../lib/products";
 import ProductCard from '@/app/components/ProductCard';
 import MultiCategoryFilter from '@/app/components/MultiCategoryFilter';
 

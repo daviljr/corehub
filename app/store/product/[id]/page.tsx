@@ -1,4 +1,4 @@
-import { getProductById, getProducts } from "../../../lib/products";
+import { getProductById, getProducts } from "../../../../../lib/products";
 import AddToCartButton from '@/app/components/AddToCartButton';
 
 type Props = {
