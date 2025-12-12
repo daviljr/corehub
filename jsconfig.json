@@ -3,7 +3,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
-      "@components/*": ["app/components/*"]
+      "@components/*": ["app/components/*"],
+      "@/components/*": ["app/components/*"],
+      "@lib/*": ["lib/*"],
+      "@/lib/*": ["lib/*"],
+      "@app/*": ["app/*"],
+      "@/app/*": ["app/*"]
     },
     "target": "ES2020",
     "moduleResolution": "node",
