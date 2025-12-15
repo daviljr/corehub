@@ -23,17 +23,39 @@ function formatPrice(value?: number | null, currency = "BRL") {
   }
 }
 
+/**
+ * Resolve imagem do produto de forma segura.
+ * Usa placeholder SOMENTE quando a imagem for inexistente ou inválida.
+ */
+function resolveImage(src?: string | null) {
+  if (!src) return "/placeholder.png";
+  if (typeof src !== "string") return "/placeholder.png";
+
+  const clean = src.trim();
+
+  if (clean.length < 5) return "/placeholder.png";
+  if (!clean.startsWith("http") && !clean.startsWith("/")) {
+    return "/placeholder.png";
+  }
+
+  return clean;
+}
+
 export default function ProductCard({ product }: Props) {
   const title = product.title || product.name || "Produto Sheidbox";
-  const img =
+
+  const img = resolveImage(
     product.image_thumb_url ||
-    product.image_url ||
-    "/placeholder.png";
+      product.image_medium_url ||
+      product.image_url ||
+      product.image_cdn_url
+  );
 
   const slugOrId = product.slug || product.id;
   const price = formatPrice(product.price, product.currency || "BRL");
 
   const isOutOfStock = (product.stock ?? 0) <= 0;
+
   const categories = Array.isArray(product.categories)
     ? product.categories.slice(0, 2)
     : [];
@@ -67,7 +89,6 @@ export default function ProductCard({ product }: Props) {
       </Link>
 
       <div className="p-4 flex flex-col gap-3">
-
         {/* TÍTULO + PREÇO */}
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
